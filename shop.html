@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Boutique - CarPlay France</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="navbar">
@@ -46,6 +46,21 @@
     <p>Contact : <a href="mailto:carplayfrance@gmail.com">carplayfrance@gmail.com</a> • Instagram : CarPlay France</p>
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    function addToCart(productName, price) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      let image = getImageForProduct(productName);
+      cart.push({ name: productName, price: price, image: image });
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(productName + " ajouté au panier !");
+    }
+
+    function getImageForProduct(name) {
+      if (name.includes("Basique")) return "Basique.jpg";
+      if (name.includes("Bluetooth")) return "bluetooth.jpg";
+      if (name.includes("Adaptateur")) return "adaptateur.webp";
+      return "";
+    }
+  </script>
 </body>
 </html>
