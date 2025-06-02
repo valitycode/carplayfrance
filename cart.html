@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Panier - CarPlay France</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">CarPlay France</div>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="shop.html">Boutique</a>
+      <a href="cart.html" class="active">Panier</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Votre panier</h1>
+    <div id="cart-items" class="products"></div>
+    <p id="total-price">Total : 0.00 €</p>
+
+    <div style="margin: 1em 0;">
+      <label for="coupon">Code promo :</label>
+      <input type="text" id="coupon" placeholder="Ex : 100" />
+      <button onclick="applyCoupon()">Appliquer</button>
+    </div>
+
+    <button onclick="checkout()">Payer maintenant</button>
+    <button onclick="clearCart()">Vider le panier</button>
+  </main>
+
+  <footer class="footer">
+    <p>Contact : <a href="mailto:carplayfrance@gmail.com">carplayfrance@gmail.com</a> • Instagram : CarPlay France</p>
+  </footer>
+
+  <script>
+    function loadCart() {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      let container = document.getElementById('cart-items');
+      let total = 0;
+      container.innerHTML = "";
+      cart.forEach((item, index) => {
+        container.innerHTML += `
+          <div class="product-card">
+            <img src="\${item.image}" alt="\${item.name}">
+            <h2>\${item.name}</h2>
+            <p>Prix : \${item.price.toFixed(2)} €</p>
+            <button onclick="removeFromCart(\${index})">Supprimer</button>
+          </div>`;
+        total += item.price;
+      });
+      document.getElementById('total-price').innerText = "Total : " + total.toFixed(2) + " €";
+    }
+
+    function removeFromCart(index) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      loadCart();
+    }
+
+    function clearCart() {
+      localStorage.removeItem('cart');
+      location.reload();
+    }
+
+    function applyCoupon() {
+      let code = document.getElementById('coupon').value.trim();
+      if (code === "100") {
+        document.getElementById('total-price').innerText = "Total : 0.00 € (Code appliqué)";
+        alert("Code promo appliqué ! 🎉 Votre commande est gratuite.");
+      } else {
+        alert("Code invalide");
+      }
+    }
+
+    async function checkout() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      if (cart.length === 0) return alert("Votre panier est vide.");
+
+      localStorage.setItem('lastOrder', JSON.stringify(cart));
+
+      const response = await fetch("https://carplay-stripe-backend.onrender.com/create-checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cart })
+      });
+
+      const session = await response.json();
+      window.location.href = session.url;
+    }
+
+    window.onload = loadCart;
+  </script>
+</body>
+</html>
