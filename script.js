@@ -1,4 +1,3 @@
-
 function addToCart(productName, price) {
   let cart = JSON.parse(localStorage.getItem('cart')) || [];
   let image = getImageForProduct(productName);
@@ -58,13 +57,15 @@ async function checkout() {
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
   if (cart.length === 0) return alert("Votre panier est vide.");
 
+  // Sauvegarde de la commande avant de partir vers Stripe
+  localStorage.setItem('lastOrder', JSON.stringify(cart));
+
   const response = await fetch("https://carplay-stripe-backend.onrender.com/create-checkout-session", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    localStorage.setItem('lastOrder', JSON.stringify(cart));
-  body: JSON.stringify({ cart })
+    body: JSON.stringify({ cart })
   });
 
   const session = await response.json();
