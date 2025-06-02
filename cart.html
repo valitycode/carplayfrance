@@ -44,10 +44,10 @@
       cart.forEach((item, index) => {
         container.innerHTML += `
           <div class="product-card">
-            <img src="\${item.image}" alt="\${item.name}">
-            <h2>\${item.name}</h2>
-            <p>Prix : \${item.price.toFixed(2)} €</p>
-            <button onclick="removeFromCart(\${index})">Supprimer</button>
+            <img src="${item.image}" alt="${item.name}">
+            <h2>${item.name}</h2>
+            <p>Prix : ${item.price.toFixed(2)} €</p>
+            <button onclick="removeFromCart(${index})">Supprimer</button>
           </div>`;
         total += item.price;
       });
