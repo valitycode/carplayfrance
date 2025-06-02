@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boutique - CarPlay France</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">CarPlay France</div>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="shop.html">Boutique</a>
+      <a href="cart.html">Panier</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <section class="shop">
+    <h1>Nos Produits</h1>
+    <div class="product-list">
+      <div class="product-card">
+        <img src="Basique.jpg" alt="CarPlay Basique">
+        <h2>CarPlay Basique</h2>
+        <p>Le modèle classique pour démarrer avec CarPlay.</p>
+        <button onclick="addToCart('CarPlay Basique', 89.99)">Ajouter au panier</button>
+      </div>
+      <div class="product-card">
+        <img src="bluetooth.jpg" alt="CarPlay Bluetooth">
+        <h2>CarPlay Bluetooth</h2>
+        <p>Connectez sans fil à votre téléphone.</p>
+        <button onclick="addToCart('CarPlay Bluetooth', 119.99)">Ajouter au panier</button>
+      </div>
+      <div class="product-card">
+        <img src="adaptateur.webp" alt="Adaptateur Voiture">
+        <h2>Adaptateur Voiture</h2>
+        <p>Permet d’ajouter une prise CarPlay à votre voiture.</p>
+        <button onclick="addToCart('Adaptateur Voiture', 29.99)">Ajouter au panier</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>Contact : <a href="mailto:carplayfrance@gmail.com">carplayfrance@gmail.com</a></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
