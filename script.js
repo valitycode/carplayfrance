@@ -63,7 +63,8 @@ async function checkout() {
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ cart })
+    localStorage.setItem('lastOrder', JSON.stringify(cart));
+  body: JSON.stringify({ cart })
   });
 
   const session = await response.json();

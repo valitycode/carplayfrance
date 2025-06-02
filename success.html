@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Commande confirmée</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .recap { max-width: 600px; margin: auto; text-align: center; padding: 2em; }
+    .recap h2 { margin-bottom: 0.5em; }
+    .recap-item { margin: 1em 0; }
+  </style>
 </head>
 <body>
   <header class="navbar">
@@ -16,14 +21,31 @@
     </nav>
   </header>
 
-  <section class="main">
+  <section class="main recap">
     <h1>🎉 Merci pour votre commande !</h1>
-    <p>Votre paiement a bien été reçu. Nous préparons votre CarPlay avec soin.</p>
+    <p>Voici un récapitulatif de votre achat :</p>
+    <div id="order-summary"></div>
     <a href="index.html">Retour à l'accueil</a>
   </section>
 
   <footer class="footer">
     <p>Contact : <a href="mailto:carplayfrance@gmail.com">carplayfrance@gmail.com</a></p>
   </footer>
+
+  <script>
+    const cart = JSON.parse(localStorage.getItem('lastOrder')) || [];
+    let summary = '';
+    let total = 0;
+    cart.forEach(item => {
+      summary += `<div class="recap-item"><strong>${item.name}</strong> — ${item.price.toFixed(2)} €</div>`;
+      total += item.price;
+    });
+    summary += `<hr><p><strong>Total payé :</strong> ${total.toFixed(2)} €</p>`;
+    document.getElementById('order-summary').innerHTML = summary;
+
+    // Nettoyage du panier actuel
+    localStorage.removeItem('cart');
+    localStorage.removeItem('lastOrder');
+  </script>
 </body>
 </html>
